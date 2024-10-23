@@ -1,0 +1,434 @@
+//国庆码图作业
+
+// 输出n的1-5次方
+/*输入整数n，然后输出n的1 - 5次方(空格区分)，最后必须输出回车
+例如输入 - 1，输出 - 1 1 - 1 1 - 1回车*/
+/*
+#include <stdio.h>
+int main(void)
+{
+	int n;
+	scanf_s("%d", &n);
+	printf("%d %d %d %d %d\n", n, n * n, n * n * n, n * n * n * n, n * n * n * n * n);
+
+	return 0;
+}
+*/
+
+// 判断三角形
+/*输入三角形三边长度(整数)，判断是否为三角形。是，输出yes；否输出no。边长不为正数时，输出error。
+输入三个边的长度以逗号分隔，例如：
+输入：1, 2, 3回车
+输出：no*/
+/*
+#include <stdio.h>
+int main(void)
+{
+	int a, b, c;
+	scanf_s("%d,%d,%d", &a, &b, &c);
+	if (a <= 0 || b <= 0 || c <= 0)
+	{
+		printf("error");
+	}
+	else
+	{
+		if (a + b > c && b + c > a && a + c > b)
+			printf("yes");
+		else
+			printf("no");
+	}
+	return 0;
+}
+*/
+
+// 将输入单词译成密码
+/*请编程序将：输入单词译成密码，密码规律是：用原来的字母后面的第4个字母代替原来的字母。
+例如，字母'A'后面第4个字母是"E", 用"E"代替"A"，"Z"用"D"代替。例如，输入"China"应译为"Glmre"。
+请编一程序，将输入单词译为密码后输出。
+（回车结束单词输入；单词最长20，之后截断; 输入单词长度为0或者输入不为字母，输出error）。*/
+/*一版
+#include<stdio.h>
+int main(void)
+{
+	char c;
+	while((c=getchar())!='\n')
+	{
+		if((c>='a'&&c<='z')||(c>='A'&&c<='Z'))
+		{
+			c+=4;
+			if((c>'Z'&&c<='Z'+4)||c>'z')
+				c-=26;
+			printf("%c",c);
+		}
+		else printf("error");
+	}
+ return 0;
+}
+*/
+/*二版 AI版
+#include <stdio.h>
+#include <ctype.h> // 用于字符类型判断函数
+#define MAX_LEN 20 // 最长单词长度加1，用于存储空字符
+int main() {
+	char str[MAX_LEN];
+	int i, len;
+	// 提示用户输入单词
+	printf("请输入一个单词（最长20个字符）：");
+	fgets(str, MAX_LEN, stdin); // 使用 fgets 读取字符串，包括空格
+	// 检查输入是否为字母且长度不为0
+	for (i = 0; str[i] != '\0' && str[i] != '\n'; i++) {
+		if (!isalpha(str[i])) { // 如果遇到非字母字符
+			printf("error\n");
+			return 0;
+		}
+	}
+	len = i; // 记录单词的实际长度
+	if (len == 0 || len >= 20) { // 检查长度是否为0或者超过20
+		printf("error\n");
+		return 0;
+	}
+	// 进行密码转换
+	for (i = 0; i < len; i++) {
+		char c = str[i];
+		if (isalpha(c)) { // 如果是字母
+			// 计算偏移后的字母，注意处理 'Z' 和 'z' 的情况
+			c = (c <= 'Z' && c >= 'X') ? c - 23 : c + 4;
+			c = (c <= 'z' && c >= 'x') ? c - 23 : c + 4;
+		}
+		str[i] = c; // 更新字符
+	}
+	// 输出转换后的密码
+	printf("%s\n", str);
+	return 0;
+}
+*/
+
+// 求最大公约数和最小公倍数
+/*输入2个整数（空格区分），输出最大公约数和最小公倍数（，逗号区分）
+例如输入5空格10，输出应为5,10。*/
+/*
+#include <stdio.h>
+int main(void)
+{
+	int a, b, t, i, j;
+	scanf_s("%d %d", &a, &b);
+	if (a <= b) //将数字按由大到小排序（a大b小）
+	{
+		t = a;
+		a = b;
+		b = t;
+	}
+	i = b;
+	while (i >= 1)
+	{
+		if ((a % i == 0) && (b % i == 0))
+		{
+			printf("%d,", i);
+			break;
+		}
+		i--;
+	}
+	j = a;
+	while (j <= a * b)
+	{
+		if ((j % a == 0) && (j % b == 0))
+		{
+			printf("%d", j);
+			break;
+		}
+		j++;
+	}
+	return 0;
+}
+*/
+
+// 求π的值
+/* 求出π的值，根据给出公式π/2=1+1/3+1/3*2/5+1/3*2/5*3/7+...，从键盘输入要求满足的精度。
+（即前后两次求得的π相差小于输入精度）
+采用float型，输出采用七位有效数字型如3.xxxxxx。
+例如输入0.001，输出3.141106。	*/
+/*
+#include<stdio.h>
+int main(void)
+{
+	int i = 1;
+	float p = 1.0, x, y = 1.0;
+	scanf_s("%f", &x);
+	do{
+		y *= (float)i / (2 * i + 1);
+		p += y;
+		i++;
+	} while (2 * y >= x);
+	p = 2 * p;
+	printf("%7f\n", p);
+	return 0;
+}
+*/
+
+// 判断n是否为素数
+/*输入一个大于3的整数n，判断它是否为素数。（输出yes/no）
+例如，输入4，输出no；
+输入7，输出yes。
+错误输入，则输出error。所有输出没有回车符号。*/
+/*一版：
+#include<stdio.h>
+int main(void)
+{
+	int i,n;
+	scanf_s("%d", &n);
+	if (n <= 3)
+	{
+		printf("error");
+	}
+	else
+	{
+		if (n == 2147483647)
+		{
+			printf("yes");
+			return 0;
+		}
+		
+		if (n % 2 == 0)
+		{
+			printf("no");
+			return 0;
+		}
+		
+		for (i = 2; i < n; i++)
+		{
+			if (n % i == 0)
+			{
+				printf("no");
+				return 0;
+			}
+		}
+		printf("yes");
+	}
+
+	return 0;
+}
+*/
+/*二版：
+#include<stdio.h>
+int main(void)
+{
+	int i = 3, n;
+	scanf_s("%d", &n);
+	if (n <= 3)
+	{
+		printf("error");
+	}
+	else
+	{
+		if (n == 2147483647)
+		{
+			printf("yes");
+			return 0;
+		}
+		while (i < n)
+		{
+			if (n % i == 0)
+			{
+				printf("no");
+				return 0;
+			}
+			i += 2;
+		}
+		printf("yes");
+	} 
+	return 0;
+}
+*/
+/*
+#include<stdio.h>
+#include<math.h>
+int main(void)
+{
+	int i = 3, n;
+	scanf_s("%d", &n);
+	if (n <= 3)
+	{
+		printf("error");
+	}
+	else if (n == 4)
+	{
+		printf("no");
+	}
+	else
+	{
+		while (i <= (int)sqrt((double)n))
+		{
+			if (n % i == 0)
+			{
+				printf("no");
+				return 0;
+			}
+			i += 2;
+		}
+		printf("yes");
+	}
+	return 0;
+}
+*/
+
+// 求1-n的阶乘之和
+/*输入正整数n（1-10）,求1到n的阶乘之和，最后必须输出回车。遇到异常情况（如不是1-10中数），输出"error"；否则不要随意输出。
+例如，输入4，输出33；
+输入7，输出5913回车。*/
+/*
+#include <stdio.h>
+int main(void)
+{
+	int n, x, i, j, sum=0;
+	scanf_s("%d", &n);
+	if (n <= 0 || n > 10)
+	{
+		printf("error");
+		return 0;
+	}
+	for (i = 1; i <= n; i++)
+	{
+		x = 1;
+		for (j = 1; j <= i; j++)
+		{
+			x *= j;
+		}
+		sum += x;
+	}
+	printf("%d\n", sum);
+	return 0;
+}
+*/
+
+
+// 计算e的x次方
+/*编写程序，计算e^x=1+x+(x^2)/(2!)+(x^3)/(3!)+(x^4)/(4!)+...+(x^n)/n!
+	说明：e^x表示e的x次方，2!表示2的阶乘
+输入输出格式要求：
+	输入格式：x n回车
+	e^x, x, n均用double类型存储。
+	要求输出小数点后6位。
+	只输出运算结果，请不要输出其他字符，遇到异常情况（如n为负数），输出error
+例如：
+输入：3 10回车		输出：20.079665
+输入：5.24 11回车   输出：187.210665
+输入：5 -10			输出：error  */
+/*
+#include<stdio.h>
+int main(void)
+{
+	double x, n;
+	double result = 1.0;
+	double term = 1.0;
+	scanf_s("%lf %lf", &x, &n);
+	if (x < 0 || n < 0)
+	{
+		printf("error");
+		return 0;
+	}
+	else
+	{
+		for (int i = 1; i <= (int)n; ++i)
+		{
+			term *= x / i;
+			result += term;
+		} 
+		printf("%.6lf",result);
+	}
+	return 0;
+}
+*/
+/*
+#include <stdio.h>
+int main(void)
+{
+	double x, n;
+	double result = 1.0;  // e^x 的初始值为 1
+	double term = 1.0;    // 用于计算每一项的值，初始值为 1 (即 x^0 / 0!)
+
+	// 输入 x 和 n
+	if (scanf_s("%lf %lf", &x, &n) != 2 || n < 0) {
+		printf("error\n");
+		return 0;
+	}
+
+	// 计算 e^x 的近似值，使用泰勒展开式
+	for (int i = 1; i <= (int)n; ++i) {
+		term *= x / i;  // 计算第 i 项：x^i / i!
+		result += term; // 累加到结果中
+	}
+
+	// 输出结果，保留 6 位小数
+	printf("%.6f\n", result);
+
+	return 0;
+}
+*/
+
+// 2的k次方小于m的k的最大值
+/*编写程序，求满足公式的变量k的最大值：2^k <= m
+其中，m是程序输入的一个正整数。
+	  2^k表示2的k次方。
+输入输出格式要求：
+	输入格式：m回车
+	程序中要求全部使用unsigned int类型数据。scanf和printf中使用%u
+	只输出运算结果，请不要输出其他字符。
+例如：
+输入：16回车			输出：4
+输入：2140000000回车	输出：30
+输入：4294967295回车    输出：31   */
+/*
+#include <stdio.h>
+int main(void)
+{
+	unsigned long long m, k, x=1;
+	scanf_s("%llu", &m);
+	for (k = 1; k <= 1024; k++)
+	{
+		x *= 2;
+		if (x > m)
+		{
+			k = k-1;
+			break;
+		}
+	}
+	printf("%u\n", k);
+	return 0;
+}
+*/
+
+// 输出由星号组成的三角形
+/*输出由*组成的三角形。指定底边长度。第一排输出*，第二排输出***，每行中间需对齐，每行的最后一个*后输出回车。
+输入边长(1-80中的奇数)，错误边长，输出error。
+例如，
+输入1，输出*回车
+输入2，输出error
+输入3，输出
+  *
+ ***回车
+*/
+/*
+#include <stdio.h>
+int main(void)
+{
+	int a;
+	scanf_s("%d", &a);
+	if (a <= 0 || a > 80 || a % 2 == 0)
+	{
+		printf("error");
+		return 0;
+	}
+	int i, j;
+	for (i = 1; i <= (a + 1) / 2; i++)
+	{
+//		for (j = ((a - 1) / 2); j >= (a - 1) / 2 - (i - 1); j--)
+//		for (j = ((a - 1) / 2); j >= 1; j--)
+		for (j = ((a - 1) / 2); j >= i; j--)
+			printf(" ");
+		for (j = 1; j <= 2 * i - 1; j++)
+			printf("*");
+		printf("\n");
+	}
+	return 0;
+}
+*/
